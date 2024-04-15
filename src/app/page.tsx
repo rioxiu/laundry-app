@@ -3,37 +3,63 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import React, { useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
+import axios from 'axios'
+import { useRouter } from "next/navigation";
 
-export default function Home() {
 
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
 
-  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)
-  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value)
-    // console.log(password)
+const Home: React.FC = () => {
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value)
+    setEmail(e.target.value)
   }
+
+  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(password)
+    setPassword(e.target.value)
+  }
+
+  useEffect(() => {
+
+    fetchURL()
+  }, [])
+
+
 
   const handleLogin = useCallback(async () => {
     try {
-      const response = await fetch(`${process.env.API_URI}/v1/login`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/v1/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
       })
+      if (res.ok) {
+        const data = await res.json()
+        const token = data.token
+        alert('berhasil login')
+        localStorage.setItem('jsonwebtoken', token)
+        sessionStorage.setItem('jsonwebtoken', token)
+        router.push('/dashboard')
 
-      if (response.ok) {
-        alert('Login Success')
-      } else {
-        alert('Login Failed')
       }
     } catch (error) {
-
+      console.log(error)
     }
+  }, [email, password])
+
+  const fetchURL = useCallback(async () => {
+
+
   }, [])
   return (
     <main className="flex flex-col min-h-screen justify-center items-center">
@@ -43,14 +69,17 @@ export default function Home() {
         </div>
         <div className="">
           <Label>Email</Label>
-          <Input onChange={handleEmail} value={email} type="mail" placeholder="etc frieren@mail.com" size={30} />
+          <Input onChange={(e) => setEmail(e.target.value)} value={email} type="mail" placeholder="etc frieren@mail.com" size={30} />
         </div>
         <div className="">
           <Label>Password</Label>
-          <Input onChange={handlePassword} value={password} type="password" placeholder="input your password" size={30} />
+          <Input onChange={(e) => setPassword(e.target.value)} value={password} type="password" placeholder="input your password" size={30} />
         </div>
         <Button onClick={handleLogin} className="text-center">Login</Button>
       </section>
     </main>
   );
 }
+
+
+export default Home;
