@@ -29,11 +29,9 @@ const Home: React.FC = () => {
     fetchURL()
   }, [])
 
-
-
   const handleLogin = useCallback(async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/v1/login`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/v1/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
