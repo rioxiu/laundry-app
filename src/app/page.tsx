@@ -14,15 +14,6 @@ const Home: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value)
-    setEmail(e.target.value)
-  }
-
-  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(password)
-    setPassword(e.target.value)
-  }
 
   useEffect(() => {
 
@@ -45,6 +36,7 @@ const Home: React.FC = () => {
         const data = await res.json()
         const token = data.token
         alert('berhasil login')
+
         localStorage.setItem('jsonwebtoken', token)
         sessionStorage.setItem('jsonwebtoken', token)
         router.push('/dashboard')

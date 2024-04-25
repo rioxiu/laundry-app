@@ -23,7 +23,7 @@ const DashboardComponents: FC<DashboardComponentsProps> = ({ children }) => {
     return (
         <>
             <header className='grid justify-between  items-center grid-cols-2 p-5 bg-neutral-800'>
-                <span>A</span>
+                <a href='/dashboard'>Home</a>
                 <div className='justify-self-end gap-2 items-center flex flex-row'>
                     <span>Halo Admin</span>
                     <div className='dropdown dropdown-bottom'>
@@ -34,7 +34,7 @@ const DashboardComponents: FC<DashboardComponentsProps> = ({ children }) => {
                         <ul tabIndex={0} className='dropdown-content menu bg-neutral-900 rounded-lg p-2 flex flex-col gap-4 z-[1'>
                             <li>Product</li>
                             <li>Tagihan</li>
-                            <li></li>
+                            <span onClick={handleLogout}>Logout</span>
                         </ul>
                     </div>
                 </div>
