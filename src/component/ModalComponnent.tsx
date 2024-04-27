@@ -6,13 +6,13 @@ interface ModalProps {
     children: React.ReactNode
 }
 
-const ModalCuciKeringComponnent: FC<ModalProps> = ({ isOpen, isClosed, children }) => {
+const ModalComponent: FC<ModalProps> = ({ isOpen, isClosed, children }) => {
 
     return (
         <>
             {
                 isOpen &&
-                <div className='fixed h-screen w-full bg-neutral-800 opacity-100 rounded-lg   p-2'>
+                <div className='absolute h-screen w-full bg-neutral-800 opacity-100  p-2'>
                     {children}
 
                 </div>
@@ -23,4 +23,4 @@ const ModalCuciKeringComponnent: FC<ModalProps> = ({ isOpen, isClosed, children 
     )
 }
 
-export default ModalCuciKeringComponnent
+export default ModalComponent

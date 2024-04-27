@@ -1,4 +1,5 @@
 'use client'
+import { useCookies } from 'next-client-cookies'
 import { redirect } from 'next/dist/server/api-utils'
 import { useRouter } from 'next/navigation'
 import React, { FC, Fragment, MouseEventHandler, ReactElement } from 'react'
@@ -12,11 +13,11 @@ type DashboardComponentsProps = {
 
 const DashboardComponents: FC<DashboardComponentsProps> = ({ children }) => {
     const router = useRouter()
+    const cookies = useCookies()
 
     const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        localStorage.removeItem('jsonwebtoken')
-        sessionStorage.removeItem('jsonwebtoken')
+        cookies.remove('token')
         router.push('/')
         alert('succes logout')
     }
