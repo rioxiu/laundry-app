@@ -9,6 +9,7 @@ import { redirect, useRouter } from "next/navigation";
 import { cookies } from "next/headers";
 import { setCookies } from "./middleware/cookies";
 import { useCookies } from "next-client-cookies";
+import toast from "react-hot-toast";
 
 
 
@@ -38,10 +39,7 @@ const Home: React.FC = () => {
       if (res.ok) {
         const data = await res.json()
         const token = data.token
-        alert('berhasil login')
-
-        // setCookies(token)
-        // localStorage.setItem("jsonwebtoken", token)
+        toast.success('Login Success')
         cookies.set("token", token)
         router.push('/dashboard')
 

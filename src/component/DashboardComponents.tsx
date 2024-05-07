@@ -3,6 +3,7 @@ import { useCookies } from 'next-client-cookies'
 import { redirect } from 'next/dist/server/api-utils'
 import { useRouter } from 'next/navigation'
 import React, { FC, Fragment, MouseEventHandler, ReactElement } from 'react'
+import toast from 'react-hot-toast'
 import { MdArrowDropDown } from 'react-icons/md'
 
 
@@ -19,7 +20,7 @@ const DashboardComponents: FC<DashboardComponentsProps> = ({ children }) => {
         e.preventDefault()
         cookies.remove('token')
         router.push('/')
-        alert('succes logout')
+        toast.success('Logout Success')
     }
     return (
         <>
