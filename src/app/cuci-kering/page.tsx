@@ -1,13 +1,17 @@
 'use client'
 import DashboardComponents from '@/component/DashboardComponents'
 import ModalComponent from '@/component/ModalComponnent';
-import React, { MouseEvent, MouseEventHandler, ReactElement, Suspense, useEffect, useState } from 'react'
+import React, { FC, MouseEvent, MouseEventHandler, ReactElement, Suspense, useEffect, useState } from 'react'
 import { IoSearch } from "react-icons/io5";
 import { FaPlus, FaUser, FaWhatsapp } from "react-icons/fa";
 import { useCookies } from 'next-client-cookies';
 import toast from 'react-hot-toast';
 
-const CuciKeringPage = () => {
+type CuciKeringPageProps = {
+    children: ReactElement
+}
+
+const CuciKeringPage: FC<CuciKeringPageProps> = () => {
 
     const cookies = useCookies()
     const [isOpenModal, setOpenModal] = useState<boolean>(false)
