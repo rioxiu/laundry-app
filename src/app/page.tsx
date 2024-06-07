@@ -1,81 +1,44 @@
-"use client"
+
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import React, { FC, Suspense, useCallback, useEffect, useState } from "react";
-import axios from 'axios'
-import { redirect, useRouter } from "next/navigation";
-import { cookies } from "next/headers";
-import { setCookies } from "./middleware/cookies";
-import { useCookies } from "next-client-cookies";
-import toast from "react-hot-toast";
+import Link from "next/link";
+import React, { FC, Fragment, Suspense, useCallback, useEffect, useState } from "react";
 
 
 
 const Home: React.FC = () => {
-  const cookies = useCookies()
-  const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  return (<Fragment >
+    <header className="p-4 text-black sticky bg-[#f5f4f3] w-full top-0 border-b-2 z-50 ">
+      <nav className="flex flex-row justify-between">
+        <div>
+          <span>Wash Rio</span>
+        </div>
+        <ul className="flex flex-row text-xl  space-x-4">
+          <Link className="hover:font-bold" href={'/about-us'}>About Us</Link>
+          <Link className="hover:font-bold" href={'/contact'}>Contact</Link>
+          <Link className="hover:font-bold" href={'/location'}>Location</Link>
+        </ul>
+      </nav>
+    </header>
+    <main className="my-10 text-black grid gap-2">
+      <section className="m-auto mx-10 flex justify-between flex-row">
+        <div className="flex flex-col  gap-8">
+          <span className="text-5xl font-bold">Cuci Bersih dan Cuci Kering, <br /> dalam beberapa Menit! </span>
+          <span className="text-xl font-semibold">Kami hadir memberikan jasa laundry kepada anda dengan sepenuh hati</span>
+          <Link href="/login" className="p-2 bg-cyan-300 hover:bg-cyan-600 max-w-xs text-center rounded-lg">Daftar disini!</Link>
+        </div>
+        <div>
+          <Image src={'/wash-machine.jpg'} width={500} height={500} className="rounded-sm" alt="wash-machine" />
+        </div>
+      </section>
+      <section className="grid justify-center bg-cyan-200">
+        <span className=" text-3xl font-semibold">Cara Kerja Kami</span>
+      </section>
 
-  useEffect(() => {
-    if (cookies.get('token')) redirect('/dashboard')
-    fetchURL()
-  }, [])
-
-  const handleLogin = useCallback(async () => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/v1/api/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      })
-      if (res.ok) {
-        const data = await res.json()
-        const token = data.token
-        toast.success('Login Success')
-        cookies.set("token", token)
-        router.push('/dashboard')
-
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }, [email, password])
-
-  const fetchURL = useCallback(async () => {
-
-
-  }, [])
-  return (
-    <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <main className="flex flex-col min-h-screen justify-center items-center">
-          <section className="m-auto flex flex-col gap-5">
-            <div className="text-center">
-              <span className="text-lg font-semibold">Login</span>
-            </div>
-            <div className="">
-              <Label>Email</Label>
-              <Input onChange={(e) => setEmail(e.target.value)} value={email} type="mail" placeholder="etc frieren@mail.com" size={30} />
-            </div>
-            <div className="">
-              <Label>Password</Label>
-              <Input onChange={(e) => setPassword(e.target.value)} value={password} type="password" placeholder="input your password" size={30} />
-            </div>
-            <Button onClick={handleLogin} className="text-center">Login</Button>
-          </section>
-        </main>
-      </Suspense>
-    </>
-
-  );
+    </main>
+    <footer>
+    </footer>
+  </Fragment>)
 }
 
 
