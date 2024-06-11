@@ -8,11 +8,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from 'next/link'
+import { login, register } from '../schema/user'
 const LoginPage = () => {
     const cookies = useCookies()
     // const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [errors, setErrors] = useState<{
+        email?: string,
+        password?: string
+    }>({})
 
     useEffect(() => {
         if (cookies.get('token'))
@@ -20,7 +25,36 @@ const LoginPage = () => {
             fetchURL()
     }, [])
 
+    const validateForm = () => {
+        const result = login.safeParse({
+            email: email,
+            password: password
+        })
+
+        if (!result.success) {
+            const newErrors: {
+                email?: string,
+                password?: string
+            } = {}
+            result.error.errors.forEach(error => {
+                if (error.path[0] === 'email') {
+                    newErrors.email = error.message
+                }
+                if (error.path[0] === 'password') {
+                    newErrors.password = error.message
+                }
+            })
+
+            setErrors(newErrors)
+            return false
+        }
+        setErrors({})
+        return true
+    }
     const handleLogin = useCallback(async () => {
+        if (!validateForm) {
+            return
+        }
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/v1/api/login`, {
                 method: 'POST',
@@ -39,6 +73,8 @@ const LoginPage = () => {
                 cookies.set("token", token)
                 // router.push('/dashboard')
 
+            } else {
+                toast.error('Login Failed')
             }
         } catch (error) {
             console.log(error)
