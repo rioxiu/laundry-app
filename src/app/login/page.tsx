@@ -11,6 +11,8 @@ import Link from 'next/link'
 import { login, register } from '../schema/user'
 const LoginPage = () => {
     const cookies = useCookies()
+
+
     // const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -24,6 +26,8 @@ const LoginPage = () => {
             // redirect('/dashboard')
             fetchURL()
     }, [])
+
+
 
     const validateForm = () => {
         const result = login.safeParse({
@@ -51,7 +55,8 @@ const LoginPage = () => {
         setErrors({})
         return true
     }
-    const handleLogin = useCallback(async () => {
+    const handleLogin = async () => {
+        console.log('hello')
         if (!validateForm) {
             return
         }
@@ -67,10 +72,11 @@ const LoginPage = () => {
                 })
             })
             if (res.ok) {
-                const data = await res.json()
-                const token = data.token
+                console.log('Login Success')
+                // const data = await res.json()
+                // const token = data.token
                 toast.success('Login Success')
-                cookies.set("token", token)
+                // cookies.set("token", token)
                 // router.push('/dashboard')
 
             } else {
@@ -79,7 +85,7 @@ const LoginPage = () => {
         } catch (error) {
             console.log(error)
         }
-    }, [email, password])
+    }
 
     const fetchURL = useCallback(async () => {
 
@@ -102,7 +108,8 @@ const LoginPage = () => {
                             <Input onChange={(e) => setPassword(e.target.value)} value={password} type="password" placeholder="input your password" size={30} />
                             <Link href="/register" className='text-xs text-blue-500 hover:text-blue-800 text-end grid mt-2' >Belum punya akun?</Link>
                         </div>
-                        <Button onClick={handleLogin} className="text-center">Login</Button>
+                        {/* <button onClick={handleLogin}>G</button> */}
+                        <span onClick={handleLogin} className="bg-black rounded-md text-white text-center p-2">Login</span>
                     </form>
                 </main>
             </Suspense>
