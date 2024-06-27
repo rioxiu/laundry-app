@@ -56,7 +56,7 @@ const LoginPage = () => {
         return true
     }
     const handleLogin = async () => {
-        console.log('hello')
+
         if (!validateForm) {
             return
         }
@@ -72,7 +72,6 @@ const LoginPage = () => {
                 })
             })
             if (res.ok) {
-                console.log('Login Success')
                 // const data = await res.json()
                 // const token = data.token
                 toast.success('Login Success')

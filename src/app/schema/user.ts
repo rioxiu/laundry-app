@@ -2,7 +2,7 @@ import { ZodType, z } from 'zod'
 import { IFormDataRegister } from '../types/user'
 
 
-export const register: ZodType<IFormDataRegister> = z.object({
+export const registerSchema: ZodType<IFormDataRegister> = z.object({
     name: z.string().min(6).max(100, {
         message: 'Name must be at least 6 characters'
     }),

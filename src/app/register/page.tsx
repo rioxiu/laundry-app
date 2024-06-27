@@ -6,7 +6,9 @@ import Link from 'next/link'
 import React, { Fragment, useState } from 'react'
 import { IFormDataRegister, IRegister } from '../types/user'
 import toast from 'react-hot-toast'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { registerSchema } from '../schema/user'
 
 const Register = () => {
 
@@ -17,7 +19,9 @@ const Register = () => {
     //     password: '',
     // })
 
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormDataRegister>()
+    const { register, handleSubmit, formState: { errors } } = useForm<IFormDataRegister>({
+        resolver: zodResolver(registerSchema)
+    })
 
     const handleRegister: SubmitHandler<IFormDataRegister> = async (data) => {
         try {
