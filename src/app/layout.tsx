@@ -3,6 +3,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
+import store from "@/redux";
+import ProviderComp from "@/redux/provide";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-white`}>
-        {children}
-        <Toaster position="bottom-right" />
+        <ProviderComp>
+          <Suspense fallback={<p>Loading</p>}>
+            {children}
+            <Toaster position="bottom-right" />
+          </Suspense>
+        </ProviderComp>
       </body>
     </html>
   );
